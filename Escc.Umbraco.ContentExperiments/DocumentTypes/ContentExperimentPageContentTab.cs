@@ -18,10 +18,10 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         [UmbracoProperty("Google Analytics Content Experiment script", "contentExperiment", BuiltInUmbracoDataTypes.TextboxMultiple, description: "If this is targeting the original page in a Google Analytics Content Experiment, paste the code here.", sortOrder: 2)]
         public string ContentExperiment { get; set; }
         
-        [UmbracoProperty("Stylesheets to load", "stylesheetUrls", BuiltInUmbracoDataTypes.TextboxMultiple, description: "Paste any stylesheet URLs, one per line. Stylesheets can be created in the Settings section.", sortOrder: 3)]
+        [UmbracoProperty("Stylesheets to load", "stylesheetUrls", BuiltInUmbracoDataTypes.TextboxMultiple, description: "Paste any stylesheet URLs, one per line. Each URL must start with /css/. Stylesheets can be created in the Settings section.", sortOrder: 3)]
         public string WhereElseToDisplayIt { get; set; }
 
-        [UmbracoProperty("Scripts to load", "javascriptUrls", BuiltInUmbracoDataTypes.TextboxMultiple, description: "Paste any JavaScript URLs, one per line. Scripts can be created in the Settings section.", sortOrder: 4)]
+        [UmbracoProperty("Scripts to load", "javascriptUrls", BuiltInUmbracoDataTypes.TextboxMultiple, description: "Paste any JavaScript URLs, one per line.  Each URL must start with /scripts/. Scripts can be created in the Settings section.", sortOrder: 4)]
         public string JavaScriptUrls { get; set; }
     }
 }

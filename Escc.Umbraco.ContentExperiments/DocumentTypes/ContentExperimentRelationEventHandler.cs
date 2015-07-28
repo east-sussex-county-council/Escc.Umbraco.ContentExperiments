@@ -15,9 +15,9 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
     /// <summary>
     /// Maintain an Umbraco relation between a content experiment settings page, and the content node it should be applied to
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public class ContentExperimentRelationEventHandler : ApplicationEventHandler
     {
-        const string RelationTypeAlias = "Escc.Umbraco.ContentExperiments.Page";
         private const string TargetPageIdPropertyAlias = "applyToPage_Content";
 
         /// <summary>
@@ -26,6 +26,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// </summary>
         /// <param name="umbracoApplication"></param>
         /// <param name="applicationContext"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             try
@@ -48,6 +49,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Umbraco.Core.Events.CopyEventArgs{IContent}"/> instance containing the event data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         void ContentService_Copying(IContentService sender, global::Umbraco.Core.Events.CopyEventArgs<IContent> e)
         {
             try
@@ -67,6 +69,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Umbraco.Core.Events.SaveEventArgs{IContent}"/> instance containing the event data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         void ContentService_Saved(IContentService sender, global::Umbraco.Core.Events.SaveEventArgs<IContent> e)
         {
             try
@@ -92,13 +95,14 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="MoveEventArgs{IContent}"/> instance containing the event data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         void ContentService_Trashed(IContentService sender, MoveEventArgs<IContent> e)
         {
             try
             {
                 foreach (var moveInfo in e.MoveInfoCollection)
                 {
-                    var relations = ApplicationContext.Current.Services.RelationService.GetByChildId(moveInfo.Entity.Id).Where(r => r.RelationType.Alias == RelationTypeAlias);
+                    var relations = ApplicationContext.Current.Services.RelationService.GetByChildId(moveInfo.Entity.Id).Where(r => r.RelationType.Alias == ContentExperimentPageRelationType.RelationTypeAlias);
                     foreach (var relation in relations)
                     {
                         var contentExperimentPage = ApplicationContext.Current.Services.ContentService.GetById(relation.ParentId);
@@ -117,6 +121,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="DeleteEventArgs{IContent}"/> instance containing the event data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void ContentService_Deleting(IContentService sender, DeleteEventArgs<IContent> e)
         {
             try
@@ -124,7 +129,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
                 foreach (var node in e.DeletedEntities)
                 {
                     // If this is a content page linked to content experiment settings, delete the settings too
-                    var relationsToContentExperiments = ApplicationContext.Current.Services.RelationService.GetByChildId(node.Id).Where(r => r.RelationType.Alias == RelationTypeAlias);
+                    var relationsToContentExperiments = ApplicationContext.Current.Services.RelationService.GetByChildId(node.Id).Where(r => r.RelationType.Alias == ContentExperimentPageRelationType.RelationTypeAlias);
                     foreach (var relation in relationsToContentExperiments)
                     {
                         var contentExperimentPage = ApplicationContext.Current.Services.ContentService.GetById(relation.ParentId);
@@ -133,7 +138,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
                     }
 
                     // If this is an experiment page, delete the relation but not the target page
-                    var relationsFromContentExperiments = ApplicationContext.Current.Services.RelationService.GetByParentId(node.Id).Where(r => r.RelationType.Alias == RelationTypeAlias);
+                    var relationsFromContentExperiments = ApplicationContext.Current.Services.RelationService.GetByParentId(node.Id).Where(r => r.RelationType.Alias == ContentExperimentPageRelationType.RelationTypeAlias);
                     foreach (var relation in relationsFromContentExperiments)
                     {
                         ApplicationContext.Current.Services.RelationService.Delete(relation);
@@ -158,7 +163,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
                 try
                 {
                     var targetPageId = Int32.Parse(applyToPage.Value.ToString(), CultureInfo.InvariantCulture);
-                    ApplicationContext.Current.Services.RelationService.Save(new Relation(node.Id, targetPageId, ApplicationContext.Current.Services.RelationService.GetRelationTypeByAlias(RelationTypeAlias)));
+                    ApplicationContext.Current.Services.RelationService.Save(new Relation(node.Id, targetPageId, ApplicationContext.Current.Services.RelationService.GetRelationTypeByAlias(ContentExperimentPageRelationType.RelationTypeAlias)));
                 }
                 catch (FormatException)
                 {
@@ -175,7 +180,7 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// <param name="node">The node.</param>
         private static void RemoveExistingRelation(IContent node)
         {
-            var relations = ApplicationContext.Current.Services.RelationService.GetByParentId(node.Id).Where(r => r.RelationType.Alias == RelationTypeAlias);
+            var relations = ApplicationContext.Current.Services.RelationService.GetByParentId(node.Id).Where(r => r.RelationType.Alias == ContentExperimentPageRelationType.RelationTypeAlias);
             foreach (var relation in relations)
             {
                 ApplicationContext.Current.Services.RelationService.Delete(relation);
@@ -185,11 +190,11 @@ namespace Escc.Umbraco.ContentExperiments.DocumentTypes
         /// <summary>
         /// Ensures the relation type exists between a 'content experiment page' node and its target content node
         /// </summary>
-        private void EnsureRelationTypeExists()
+        private static void EnsureRelationTypeExists()
         {
-            if (ApplicationContext.Current.Services.RelationService.GetRelationTypeByAlias(RelationTypeAlias) == null)
+            if (ApplicationContext.Current.Services.RelationService.GetRelationTypeByAlias(ContentExperimentPageRelationType.RelationTypeAlias) == null)
             {
-                var relationType = new RelationType(new Guid("c66ba18e-eaf3-4cff-8a22-41b16d66a972"), new Guid("c66ba18e-eaf3-4cff-8a22-41b16d66a972"), RelationTypeAlias);
+                var relationType = new ContentExperimentPageRelationType();
                 ApplicationContext.Current.Services.RelationService.Save(relationType);
             }
         }

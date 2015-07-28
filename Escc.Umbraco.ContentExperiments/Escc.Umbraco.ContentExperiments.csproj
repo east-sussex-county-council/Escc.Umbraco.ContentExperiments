@@ -350,10 +350,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\ContentExperimentsController.cs" />
+    <Compile Include="ContentExperimentPageRelationType.cs" />
+    <Compile Include="ContentExperimentPageSettings.cs" />
+    <Compile Include="ContentExperimentSettingsService.cs" />
     <Compile Include="DocumentTypes\ContentExperimentPageContentTab.cs" />
     <Compile Include="DocumentTypes\ContentExperimentPageDocumentType.cs" />
     <Compile Include="DocumentTypes\ContentExperimentRelationEventHandler.cs" />
     <Compile Include="DocumentTypes\ContentExperimentsDocumentType.cs" />
+    <Compile Include="IContentExperimentSettingsService.cs" />
+    <Compile Include="ListOfUrlsFieldParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
