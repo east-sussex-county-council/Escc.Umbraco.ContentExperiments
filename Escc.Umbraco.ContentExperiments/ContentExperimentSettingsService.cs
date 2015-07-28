@@ -31,8 +31,8 @@ namespace Escc.Umbraco.ContentExperiments
             settings.ContentExperimentScript = new HtmlString(settingsPage.GetPropertyValue<string>("contentExperiment_Content"));
 
             var urlParser = new ListOfUrlsFieldParser();
-            urlParser.ParseUrls(settingsPage.GetPropertyValue<string>("stylesheetUrls"), settings.StylesheetUrls);
-            urlParser.ParseUrls(settingsPage.GetPropertyValue<string>("javascriptUrls"), settings.ScriptUrls);
+            urlParser.ParseUrls(settingsPage.GetPropertyValue<string>("stylesheetUrls_Content"), settings.StylesheetUrls);
+            urlParser.ParseUrls(settingsPage.GetPropertyValue<string>("javascriptUrls_Content"), settings.ScriptUrls);
             
             return settings;
         }
