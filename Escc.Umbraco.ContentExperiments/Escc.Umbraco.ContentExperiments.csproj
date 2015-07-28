@@ -352,6 +352,7 @@
     <Compile Include="ApiControllers\ContentExperimentsController.cs" />
     <Compile Include="DocumentTypes\ContentExperimentPageContentTab.cs" />
     <Compile Include="DocumentTypes\ContentExperimentPageDocumentType.cs" />
+    <Compile Include="DocumentTypes\ContentExperimentRelationEventHandler.cs" />
     <Compile Include="DocumentTypes\ContentExperimentsDocumentType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
