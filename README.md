@@ -1,6 +1,6 @@
 # Escc.Umbraco.ContentExperiments
 
-This project allow you to manage custom styles and scripts for Google Analytics content experiments in Umbraco. Each Umbraco page in a content experiment has a corresponding page using the 'Content experiment page' document type, and these are kept under a common 'Content experiments' document type which uses a list view.
+This project allows you to manage custom styles and scripts for Google Analytics content experiments in Umbraco. Each Umbraco page in a content experiment has a corresponding page using the 'Content experiment page' document type, and these are kept under a common 'Content experiments' document type which uses a list view.
 
 The 'Content experiment page' document type has three fields: 
 
@@ -27,3 +27,7 @@ However, when the consuming project is deployed NuGet restore ensures the DLL re
 3. Build the solution
 4. Grant modify permissions to the application pool account on the web root folder and all children
 7. In `~\web.config` set the `UmbracoConfigurationStatus` and `umbracoDbDSN`, or run the Umbraco installer.
+8. At a command line, run the following two commands to add the document types to Umbraco (substitute the hostname and port where you set up this project):
+
+		curl --insecure -X POST -d "" https://hostname:port/umbraco/api/ContentExperiments/CreateUmbracoSupportingTypes?token=
+		curl --insecure -X POST -d "" https://hostname:port/umbraco/api/ContentExperiments/CreateUmbracoDocumentTypes?token=
