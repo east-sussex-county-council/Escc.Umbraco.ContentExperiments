@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>48f2476d-a305-4048-b0d3-3c063e2c3438</ProjectGuid>
     <OutputPath>Bin\</OutputPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <NuBuildVersionSource>Manual</NuBuildVersionSource>
     <NuBuildVersionFileName>True</NuBuildVersionFileName>
     <NuBuildAddBinariesToSubfolder>False</NuBuildAddBinariesToSubfolder>
