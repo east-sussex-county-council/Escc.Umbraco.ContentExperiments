@@ -5,9 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Escc.Umbraco.ContentExperiments.DocumentTypes;
 using Escc.Umbraco.PropertyEditors.RichTextPropertyEditor;
-using Escc.Umbraco.PropertyEditors.Stylesheets;
 using Exceptionless;
-using ExCSS;
 using Umbraco.Inception.CodeFirst;
 using Umbraco.Web.WebApi;
 
@@ -40,9 +38,6 @@ namespace Escc.Umbraco.ContentExperiments.ApiControllers
 
             try
             {
-                // Create stylesheets for properties using rich text editor
-                TinyMceStylesheets.CreateStylesheets(new StylesheetService(), new Parser());
-
                 // Insert data types before the document types that use them, otherwise the relevant property is not created
                 RichTextAuthorNotesDataType.CreateDataType();
 
