@@ -10,7 +10,7 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 
-namespace Escc.Umbraco.ContentExperiments.DocumentTypes
+namespace Escc.Umbraco.ContentExperiments
 {
     /// <summary>
     /// Maintain an Umbraco relation between a content experiment settings page, and the content node it should be applied to

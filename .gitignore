@@ -36,23 +36,4 @@ Properties/PublishProfiles/*
 packages
 .nuget/NuGet.targets
 *.GhostDoc.xml
-
-# files added by nuget packages
-css
-
-# Umbraco files
-*/[Uu]mbraco/
-*/[Uu]mbraco_Client/
-*/[Aa]pp_Data/
-*/[Aa]pp_Browsers/
-*/[Aa]pp_Plugins/
-*/[Ii]nstall/
-*/[Cc]onfig/
-*/[Dd]efault.aspx
-*/[Gg]lobal.asax
-*/[Vv]iews/[Ww]eb.config.transform
-*/[Mm]edia
-*.backup
-dummy.txt
-*.config.js
-*/[Vv]iews/Partials/Grid
+.vs
