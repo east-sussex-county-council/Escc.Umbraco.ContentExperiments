@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Exceptionless.Extensions;
 
 namespace Escc.Umbraco.ContentExperiments
 {
@@ -21,15 +19,16 @@ namespace Escc.Umbraco.ContentExperiments
         {
             if (urls == null) throw new ArgumentNullException("urls");
 
-            var urlLines = valueToParse.SplitAndTrim(Environment.NewLine);
+            var urlLines = valueToParse.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in urlLines)
             {
                 // Only allow scripts and styles from the folder where Umbraco saves them, to minimise XSS risk
-                var isAllowedFolder = (line.StartsWith("/scripts/", StringComparison.OrdinalIgnoreCase) || line.StartsWith("/css/", StringComparison.OrdinalIgnoreCase));
-                var isAllowedExtension = (line.EndsWith(".js", StringComparison.OrdinalIgnoreCase) || line.EndsWith(".css", StringComparison.OrdinalIgnoreCase));
+                var trimmed = line.Trim();
+                var isAllowedFolder = (trimmed.StartsWith("/scripts/", StringComparison.OrdinalIgnoreCase) || trimmed.StartsWith("/css/", StringComparison.OrdinalIgnoreCase));
+                var isAllowedExtension = (trimmed.EndsWith(".js", StringComparison.OrdinalIgnoreCase) || trimmed.EndsWith(".css", StringComparison.OrdinalIgnoreCase));
                 if (isAllowedFolder && isAllowedExtension)
                 {
-                    urls.Add(new Uri(line, UriKind.Relative));
+                    urls.Add(new Uri(trimmed, UriKind.Relative));
                 }
             }
         }
